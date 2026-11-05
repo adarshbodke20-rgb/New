@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sunrise Bakery – Fresh bread, cakes and pastries</title>
+<meta name="description" content="Neighbourhood bakery. Fresh bread every morning, custom cakes, and easy ordering on WhatsApp.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥐</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--green:#12332c;--green2:#1d4a3f;--butter:#f2cf6b;--paper:#f6f7f2;--ink:#14201d;--muted:#5d6b66;--line:#d9ddd3;--rye:#7a4a2e}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 1.05rem/1.65 'DM Sans',system-ui,sans-serif}
+h1,h2,.brand{font-family:'Fraunces',Georgia,serif;line-height:1.1;margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--butter);outline-offset:2px}
+.top{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:14px 5vw;background:var(--green);color:#fff}
+.brand{font-weight:900;font-size:1.3rem;text-decoration:none}
+nav a{margin-left:20px;text-decoration:none;opacity:.85}
+nav a:hover{opacity:1}
+.hero{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:center;background:var(--green);color:#fff;padding:72px 5vw 88px}
+.hero h1{font-size:clamp(2.4rem,6vw,4.4rem);font-weight:900;letter-spacing:-.02em;max-width:14ch}
+.hero p{color:#cfe0d9;max-width:46ch;margin:20px 0 28px}
+.btn{display:inline-block;background:var(--butter);color:var(--green);font-weight:700;text-decoration:none;padding:14px 26px;border-radius:10px;border:0;cursor:pointer;font-size:1rem}
+.btn.dark{background:var(--green);color:#fff}
+.board{background:var(--green2);border-radius:14px;padding:26px;border:1px solid #2b6054}
+.board h2{font-size:1.4rem;color:var(--butter)}
+.now{color:#fff!important;margin:6px 0 14px!important;font-weight:500}
+.board ul{list-style:none;margin:0;padding:0}
+.board li{display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid #2b6054;color:#cfe0d9}
+.board li.done{color:#fff}
+.board li.done span:last-child{color:var(--butter);font-weight:700}
+.board li.next{color:var(--butter)}
+section{padding:72px 5vw;max-width:900px;margin:0 auto}
+section h2{font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:22px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.tab{font:inherit;background:transparent;border:1.5px solid var(--line);padding:8px 18px;border-radius:999px;cursor:pointer;color:var(--ink)}
+.tab[aria-selected=true]{background:var(--green);color:#fff;border-color:var(--green)}
+.items{list-style:none;margin:0;padding:0}
+.item{display:grid;grid-template-columns:1fr auto auto;gap:14px;align-items:center;padding:18px 0;border-bottom:1px solid var(--line)}
+.item h3{margin:0;font-size:1.1rem;font-weight:700}
+.item p{margin:2px 0 0;color:var(--muted);font-size:.95rem}
+.price{font-weight:700;color:var(--rye)}
+.qty{display:flex;align-items:center;gap:10px}
+.qty button{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--green);background:#fff;color:var(--green);font-size:1.2rem;cursor:pointer}
+.qty button.add{width:auto;padding:0 16px;border-radius:999px;font:700 .95rem 'DM Sans',sans-serif}
+.qty span{min-width:18px;text-align:center;font-weight:700}
+.story{border-top:1px solid var(--line)}
+.story p{max-width:60ch;color:var(--muted)}
+.visit{display:grid;grid-template-columns:1fr 1fr;gap:40px;border-top:1px solid var(--line)}
+.visit h2{font-size:1.6rem}
+footer{background:var(--green);color:#cfe0d9;text-align:center;padding:26px 5vw 110px;font-size:.9rem}
+.cart{position:fixed;left:12px;right:12px;bottom:12px;z-index:20;max-width:720px;margin:0 auto;background:var(--green);color:#fff;border-radius:14px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.cart[hidden]{display:none}
+.cart span{display:block;color:var(--butter);font-weight:700}
+.cart-actions{display:flex;align-items:center;gap:12px}
+.cart .btn{padding:11px 16px;font-size:.92rem}
+.link{background:none;border:0;color:#cfe0d9;text-decoration:underline;cursor:pointer;font:inherit}
+@media(max-width:760px){.hero{grid-template-columns:1fr;padding:48px 5vw 56px}.visit{grid-template-columns:1fr}nav a{margin-left:12px}.item{grid-template-columns:1fr auto}.item .price{grid-row:1;grid-column:2}.item .qty{grid-column:1/-1}.cart{flex-direction:column;align-items:stretch}.cart-actions{justify-content:space-between}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#top" id="brandName">Sunrise Bakery</a>
+  <nav><a href="#menu">Menu</a><a href="#story">Story</a><a href="#visit">Visit</a></nav>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="hero-text">
+    <h1>Bread that’s still warm when you get home.</h1>
+    <p>We bake in small batches from 5 AM, every day. Pick what you like, send the order on WhatsApp, and collect it fresh or get it delivered.</p>
+    <a class="btn" href="#menu">Order for today</a>
+  </div>
+  <aside class="board" aria-live="polite">
+    <h2>Today’s bake</h2>
+    <p class="now" id="boardNow"></p>
+    <ul id="boardList"></ul>
+  </aside>
+</section>
+
+<section id="menu" class="menu">
+  <h2>Menu</h2>
+  <div class="tabs" id="tabs" role="tablist"></div>
+  <ul class="items" id="items"></ul>
+</section>
+
+<section id="story" class="story">
+  <h2>Baked slowly, on purpose</h2>
+  <p>Our sourdough rests for 24 hours. Our butter is real butter. We never use preservatives, and anything unsold at closing goes to the shelter down the road.</p>
+  <p>What began in one home oven is now a small team that knows most customers by name.</p>
+</section>
+
+<section id="visit" class="visit">
+  <div>
+    <h2>Visit</h2>
+    <p id="addr"></p>
+    <p>Mon–Sat 7 AM – 9 PM<br>Sunday 8 AM – 2 PM</p>
+  </div>
+  <div>
+    <h2>Order or ask</h2>
+    <p id="phone"></p>
+    <a class="btn dark" id="wa" href="#">Message on WhatsApp</a>
+  </div>
+</section>
+</main>
+
+<footer>© <span id="yr"></span> Sunrise Bakery. Made fresh.</footer>
+
+<div class="cart" id="cart" hidden>
+  <div><strong id="cartCount">0 items</strong><span id="cartTotal"></span></div>
+  <div class="cart-actions"><button class="link" id="clear">Clear</button><a class="btn" id="send" href="#">Send order on WhatsApp</a></div>
+</div>
+<script>
+// ===== EDIT YOUR BUSINESS DETAILS HERE =====
+const CONFIG = {
+  name: "Sunrise Bakery",
+  whatsapp: "919000000000",        // country code + number, no + or spaces
+  phoneLabel: "+91 90000 00000",
+  address: "Main Road, Your Town",
+  currency: "₹"
+};
+const MENU = [
+  {id:1,cat:"Bread",name:"Soft milk bread",desc:"Pillowy loaf, baked at 6 AM.",price:60},
+  {id:2,cat:"Bread",name:"Country sourdough",desc:"24-hour ferment, crackly crust.",price:140},
+  {id:3,cat:"Bread",name:"Garlic butter buns (4)",desc:"Best eaten warm.",price:90},
+  {id:4,cat:"Pastry",name:"Butter croissant",desc:"Flaky, golden, 27 layers.",price:50},
+  {id:5,cat:"Pastry",name:"Almond danish",desc:"Frangipane and toasted almonds.",price:70},
+  {id:6,cat:"Cakes",name:"Chocolate truffle (500 g)",desc:"Dark chocolate ganache. Order a day ahead.",price:550},
+  {id:7,cat:"Cakes",name:"Pineapple cake (500 g)",desc:"Light sponge, fresh cream.",price:480},
+  {id:8,cat:"Cookies",name:"Choco chip box (6)",desc:"Soft in the middle.",price:150},
+  {id:9,cat:"Cookies",name:"Oat and jaggery box (6)",desc:"Crunchy, less sweet.",price:130}
+];
+const BAKES = [
+  {t:6.5,n:"Sourdough and milk bread"},
+  {t:7.5,n:"Croissants and danish"},
+  {t:11,n:"Garlic buns"},
+  {t:15,n:"Cookies"},
+  {t:17.5,n:"Evening buns"}
+];
+// ============================================
+const $ = id => document.getElementById(id);
+const fmt = n => CONFIG.currency + n.toLocaleString("en-IN");
+const cart = {};
+let activeCat = "Bread";
+
+function hourLabel(t){const h=Math.floor(t),m=t%1?"30":"00",ap=h>=12?"PM":"AM";return `${(h%12)||12}:${m} ${ap}`}
+
+function renderBoard(){
+  const d=new Date(),now=d.getHours()+d.getMinutes()/60;
+  const next=BAKES.find(b=>b.t>now);
+  $("boardNow").textContent=next?`Next out of the oven: ${next.n} at ${hourLabel(next.t)}.`:"All of today’s batches are out. See you tomorrow morning.";
+  $("boardList").innerHTML=BAKES.map(b=>{
+    const cls=b.t<=now?"done":(b===next?"next":"");
+    const st=b.t<=now?"Fresh today":(b===next?"Next":"Later");
+    return `<li class="${cls}"><span>${hourLabel(b.t)} · ${b.n}</span><span>${st}</span></li>`;
+  }).join("");
+}
+
+function renderTabs(){
+  const cats=[...new Set(MENU.map(i=>i.cat))];
+  $("tabs").innerHTML=cats.map(c=>`<button class="tab" role="tab" aria-selected="${c===activeCat}" data-cat="${c}">${c}</button>`).join("");
+}
+
+function renderItems(){
+  $("items").innerHTML=MENU.filter(i=>i.cat===activeCat).map(i=>{
+    const q=cart[i.id]||0;
+    const ctl=q?`<button aria-label="Remove one ${i.name}" data-dec="${i.id}">−</button><span>${q}</span><button aria-label="Add one ${i.name}" data-inc="${i.id}">+</button>`
+                :`<button class="add" data-inc="${i.id}">Add</button>`;
+    return `<li class="item"><div><h3>${i.name}</h3><p>${i.desc}</p></div><div class="price">${fmt(i.price)}</div><div class="qty">${ctl}</div></li>`;
+  }).join("");
+}
+
+function renderCart(){
+  const lines=MENU.filter(i=>cart[i.id]);
+  const count=lines.reduce((s,i)=>s+cart[i.id],0);
+  const total=lines.reduce((s,i)=>s+cart[i.id]*i.price,0);
+  $("cart").hidden=!count;
+  $("cartCount").textContent=`${count} item${count===1?"":"s"}`;
+  $("cartTotal").textContent=fmt(total);
+  const msg=`Hi ${CONFIG.name}, I’d like to order:\n`+lines.map(i=>`• ${cart[i.id]} × ${i.name} – ${fmt(cart[i.id]*i.price)}`).join("\n")+`\nTotal: ${fmt(total)}\nName:\nPickup or delivery:`;
+  $("send").href=`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`;
+}
+
+document.addEventListener("click",e=>{
+  const t=e.target.closest("button");if(!t)return;
+  if(t.dataset.cat){activeCat=t.dataset.cat;renderTabs();renderItems();return}
+  if(t.dataset.inc){cart[t.dataset.inc]=(cart[t.dataset.inc]||0)+1}
+  else if(t.dataset.dec){const id=t.dataset.dec;cart[id]=(cart[id]||1)-1;if(!cart[id])delete cart[id]}
+  else if(t.id==="clear"){for(const k in cart)delete cart[k]}
+  else return;
+  renderItems();renderCart();
+});
+
+document.title=`${CONFIG.name} – Fresh bread, cakes and pastries`;
+$("brandName").textContent=CONFIG.name;
+$("addr").textContent=CONFIG.address;
+$("phone").textContent=CONFIG.phoneLabel;
+$("wa").href=`https://wa.me/${CONFIG.whatsapp}`;
+$("yr").textContent=new Date().getFullYear();
+renderBoard();renderTabs();renderItems();renderCart();
+setInterval(renderBoard,60000);
+</script>
+</body>
+</html>
